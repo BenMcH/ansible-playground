@@ -1,21 +1,18 @@
 ---
-- hosts: vault
-  become: true
+- import_playbook: pull-bw-data.yml
+
+- hosts: localhost
 
   tasks:
-    - name: Tar bw_data
-      archive:
-        path: ~/bitwarden_rs-docker-compose/bw_data
-        dest: ~/bw_data.tar.gz
-        format: gz
 
-    - name: Fetch backup
-      fetch:
-        src: ~/bw_data.tar.gz
-        dest: ./
-        flat: true
+    - name: Simple PUT operation
+      amazon.aws.aws_s3:
+        bucket: mchone-bitwarden-data
+        object: /bw_data.tar.gz
+        src: ./bw_data.tar.gz
+        mode: put
 
-    - name: Delete Remote Backup
+    - name: Delete Backup File
       file:
-        path: ~/bw_data.tar.gz
+        path: ./bw_data.tar.gz
         state: absent

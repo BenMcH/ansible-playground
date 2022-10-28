@@ -1,0 +1,21 @@
+---
+- hosts: vault
+  become: true
+
+  tasks:
+    - name: Tar bw_data
+      archive:
+        path: ~/bitwarden_rs-docker-compose/bw_data
+        dest: ~/bw_data.tar.gz
+        format: gz
+
+    - name: Fetch backup
+      fetch:
+        src: ~/bw_data.tar.gz
+        dest: ./
+        flat: true
+
+    - name: Delete Remote Backup
+      file:
+        path: ~/bw_data.tar.gz
+        state: absent
