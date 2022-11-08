@@ -1,0 +1,15 @@
+- name: Git checkout bitwarden
+  ansible.builtin.git:
+    repo: 'https://github.com/BenMcH/bitwarden_rs-docker-compose.git'
+    dest: ~/bitwarden-docker
+    force: true
+
+- name: Replace .env
+  template:
+    src: templates/.env.j2
+    dest: ~/bitwarden-docker/.env
+
+- name: Create and start service
+  community.docker.docker_compose:
+    project_src: ~/bitwarden-docker
+  register: output
