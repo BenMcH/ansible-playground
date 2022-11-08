@@ -19,3 +19,18 @@
       file:
         path: ~/bw_data.tar.gz
         state: absent
+
+- hosts: localhost
+  tasks:
+    - name: Simple PUT operation
+      amazon.aws.aws_s3:
+        bucket: mchone-bitwarden-data
+        object: /bw_data.tar.gz
+        src: ./bw_data.tar.gz
+        mode: put
+
+    - name: Delete Backup File
+      file:
+        path: ./bw_data.tar.gz
+        state: absent
+
