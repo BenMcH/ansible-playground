@@ -8,7 +8,7 @@
         dest: ./bw_data.tar.gz
         mode: get
 
-- hosts: new_vault
+- hosts: vaults
   roles:
     - aptitude
     - docker

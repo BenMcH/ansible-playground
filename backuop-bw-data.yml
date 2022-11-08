@@ -1,11 +1,10 @@
 ---
-- hosts: vault
-  become: true
+- hosts: vaults
 
   tasks:
     - name: Tar bw_data
       archive:
-        path: ~/bitwarden_rs-docker-compose/bw_data
+        path: ~/bitwarden-docker/bw_data
         dest: ~/bw_data.tar.gz
         format: gz
 
