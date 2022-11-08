@@ -1,0 +1,6 @@
+- name: Install aptitude
+  become: true
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
