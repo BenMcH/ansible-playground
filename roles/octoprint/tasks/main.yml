@@ -1,0 +1,35 @@
+- name: Install aptitude
+  become: true
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install required system packages
+  become: true
+  apt:
+    pkg:
+      - python3
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Install octoprint
+  ansible.builtin.pip:
+    name: OctoPrint
+    virtualenv: ~/octoprint
+
+- name: Install Service
+  become: true
+  template:
+    src: templates/octoprint.service.j2
+    dest: /etc/systemd/system/octoprint.service
+
+- name: Enable octoprint service and start
+  become: true
+  ansible.builtin.service:
+    name: octoprint
+    enabled: yes
+    state: started
