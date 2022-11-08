@@ -1,7 +1,22 @@
 ---
-- hosts: test
+- hosts: localhost
+  tasks:
+    - name: Simple get operation
+      amazon.aws.aws_s3:
+        bucket: mchone-bitwarden-data
+        object: /bw_data.tar.gz
+        dest: ./bw_data.tar.gz
+        mode: get
 
+- hosts: test
   roles:
     - aptitude
     - docker
     - bitwarden
+
+- hosts: localhost
+  tasks:
+    - name: Delete data file
+      file:
+        path: ./bw_data.tar.gz
+        state: absent

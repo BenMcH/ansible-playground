@@ -9,6 +9,12 @@
     src: templates/.env.j2
     dest: ~/bitwarden-docker/.env
 
+- name: Untar bw_data
+  unarchive:
+    src: ./bw_data.tar.gz
+    dest: ~/bitwarden-docker
+
+
 - name: Create and start service
   community.docker.docker_compose:
     project_src: ~/bitwarden-docker
